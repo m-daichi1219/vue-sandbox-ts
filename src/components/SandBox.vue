@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>SandBox</h1>
-    <InputList :edittext.sync="inputObject.edittext" :targettext.sync="inputObject.targettext"/>
+    <Delivery
+     :edittext.sync="inputObject.edittext"
+     :targettext.sync="inputObject.targettext"/>
   </div>
 </template>
 
@@ -9,7 +11,7 @@
 import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import InputList from '@/components/InputList.vue';
+import Delivery from '@/components/Delivery.vue';
 
 @Component({
   data() {
@@ -21,7 +23,7 @@ import InputList from '@/components/InputList.vue';
     };
   },
   components: {
-    InputList,
+    Delivery,
   },
 })
 export default class SandBox extends Vue {
