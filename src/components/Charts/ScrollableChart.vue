@@ -1,6 +1,6 @@
 <template>
   <div class="chart-area">
-    <div class="scrollable-chart">
+    <div ref="chartContainer" class="scrollable-chart">
       <div :style="{ width: `${chartWidth}px` }">
         <slot name="chart"/>
       </div>
@@ -14,14 +14,19 @@ import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 
-@Component({
-  data() {
-    return {
-      chartWidth: 2000,
-    };
-  },
-})
+@Component({})
 export default class ScrollableChart extends Vue {
+  private chartWidth = 2000;
+
+  private scrolleRight() {
+    const scrollable = this.$refs.chartContainer as HTMLElement;
+    if (!scrollable) return;
+    scrollable.scrollLeft = this.chartWidth;
+  }
+
+  mounted() {
+    this.scrolleRight();
+  }
 }
 </script>
 
