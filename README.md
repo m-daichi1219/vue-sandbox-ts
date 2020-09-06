@@ -1,4 +1,5 @@
 # vue-sandbox-ts
+preview:[github.io](https://m-daichi1219.github.io/vue-sandbox-ts/)
 
 ## Project setup
 ```
