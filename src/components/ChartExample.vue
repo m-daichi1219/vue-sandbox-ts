@@ -18,6 +18,33 @@
         />
       </template>
     </scrollable-chart>
+    <h1>メーターサンプル</h1>
+    <vue-svg-gauge
+      class="gauge-example"
+      :start-angle="-90"
+      :end-angle="90"
+      :value="gaugeValue"
+      :separator-thickness="0"
+      :min="0"
+      :max="3000"
+      :gauge-color="[
+       { offset: 0, color: '#4682b4'},
+       { offset: 2000, color: '#f0e68c'},
+       ]"
+      :scale-interval="0.1"
+    >
+      <div class="inner-text inner-text--3">
+        <span>{{ gaugeText }}</span>
+      </div>
+    </vue-svg-gauge>
+    <br />
+    <button @click="changeGaugeValue(0)">0</button>
+    <button @click="changeGaugeValue(500)">500</button>
+    <button @click="changeGaugeValue(1000)">1000</button>
+    <button @click="changeGaugeValue(1500)">1500</button>
+    <button @click="changeGaugeValue(2000)">2000</button>
+    <button @click="changeGaugeValue(2500)">2500</button>
+    <button @click="changeGaugeValue(3000)">3000</button>
   </div>
 </template>
 
@@ -27,6 +54,7 @@ import {
 } from 'vue-property-decorator';
 import ScrollableChart from '@/components/Charts/ScrollableChart.vue';
 import LineChart from '@/components/Charts/ChartJS/LineChart.vue';
+import { VueSvgGauge } from 'vue-svg-gauge';
 
 const getRandomInt = (max: number): number => (
   Math.floor(Math.random() * Math.floor(max))
@@ -54,12 +82,15 @@ const getDataSets = (size: number): Array<number> => {
   components: {
     ScrollableChart,
     LineChart,
+    VueSvgGauge,
   },
 })
 export default class ChartExample extends Vue {
   private exampleLabels = getDateLabels(24);
 
   private exampleDatasets = getDataSets(24);
+
+  private gaugeValue = 1000;
 
   private yAxesBgPlugin: Chart.PluginServiceRegistrationOptions[] = [
     {
@@ -211,6 +242,33 @@ export default class ChartExample extends Vue {
     },
     animation: { duration: 0 },
   };
+
+  private changeGaugeValue(value: number) {
+    this.gaugeValue = value;
+  }
+
+  get gaugeText() {
+    const value = this.gaugeValue;
+    let text = '';
+    switch (value) {
+      case 0:
+        text = '😊';
+        break;
+      case 500:
+        text = '😊';
+        break;
+      case 1000:
+        text = '😒';
+        break;
+      case 1500:
+        text = '😢';
+        break;
+      default:
+        text = '🤢';
+    }
+
+    return text;
+  }
 }
 </script>
 
@@ -218,4 +276,27 @@ export default class ChartExample extends Vue {
 .scrollable-chart-area {
   height: 300px;
 }
+
+.gauge-example {
+  width: 300px;
+  display: inline-block;
+  text-align: center;
+}
+
+.inner-text {
+  width: 100%;
+  height: 100%;
+}
+
+.inner-text--3 {
+  display: flex;
+  justify-content: center;
+  margin-top: 85px;
+  font-size: 20px;
+  color: #de3a21;
+  font-weight: bold;
+  margin-top: 70px;
+}
+span { max-width: 100px }
+
 </style>
